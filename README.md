@@ -90,7 +90,7 @@ This repository keeps track of my progress in completing Google Data Analytics P
 ### Guiding questions
 1. What tools are you choosing and why?
     - Excel and R.
-        - Excel can be used to process simple conversion tasks
+        - Excel can be used to browse the data and process simple conversion tasks.
         - R can be used to process more advanced wrangling and bind all 12 datasets into a single one for further analysis. 
 3. Have you ensured your data’s integrity?
 4. What steps have you taken to ensure that your data is clean?
@@ -105,3 +105,4 @@ results?
 
 ### Deliverable 
 - Documentation of any cleaning or manipulation of data
+    - All 12 spreadsheets have been renamed to the format of "yyyymm.csv" to ensure naming simplicity and consistency. 
