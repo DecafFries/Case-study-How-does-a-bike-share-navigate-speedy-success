@@ -89,7 +89,9 @@ This repository keeps track of my progress in completing Google Data Analytics P
 ## Process
 ### Guiding questions
 1. What tools are you choosing and why?
-    - 
+    - Excel and R.
+        - Excel can be used to process simple conversion tasks
+        - R can be used to process more advanced wrangling and bind all 12 datasets into a single one for further analysis. 
 3. Have you ensured your data’s integrity?
 4. What steps have you taken to ensure that your data is clean?
 5. How can you verify that your data is clean and ready to analyze? Have you documented your cleaning process so you can review and share those
