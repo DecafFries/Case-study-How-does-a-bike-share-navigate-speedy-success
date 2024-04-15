@@ -100,7 +100,7 @@ This repository keeps track of my progress in completing Google Data Analytics P
 3. What steps have you taken to ensure that your data is clean?
     - After the data had been fully merged, I checked the structure of the data and noticed date time variables were recognised as character values by R. I then converted them as POSIXct values to ensure tasks at a later stage wouldn't be affected by misaligned data types. 
     - After creating new variables, I sorted the data based on the ascending order of starting date time and filtered out all the records whose key variables contained null values. It turned out that out of 5750177 observations, there are 7566 records missing latitude and longitude data of the ending points, which would result in biased/incorrect interpretations of ride duration, and they have been removed to ensure the data is clean.
-    - After sorting the data by ascending order of ride_length, we can see that 1464 records contain ride_length with negative or zero values which is intuitive and unnatural. They have been removed to ensure rigorous of the analysis. 
+    - After sorting the data by ascending order of ride_length, we can see that 1464 records contain ride_length with negative or zero values which is intuitive and unnatural. They have been removed to ensure a rigorous analysis. 
     - I also checked the counts of distinct values of ride_id, the variable that is supposed to be unique for every record. It turned out that the data does not have any duplicates since the distinct counts of ride_id equals the counts of the entire observations.
 4. How can you verify that your data is clean and ready to analyze? Have you documented your cleaning process so you can review and share those
 results?
@@ -135,14 +135,14 @@ results?
 1. How should you organise your data to perform analysis on it?
     - I should consider dividing the data into two main groups, one for casual users and one for member users; also consider 
 2. Has your data been properly formatted?
-    - Yes, I have done all the necessary conversion during the process stage.
+    - Yes, I have done all the necessary conversions during the process stage.
 3. What surprises did you discover in the data?
-    - It surprises me that although the casual users have less rides than member users, they have much higher average duration than member users.
+    - It surprises me that although the casual users have fewer rides than member users, they have a much higher average duration than member users.
 4. What trends or relationships did you find in the data?
-    - First observation is what has been explained in question 3.
-    - In general, member users spent more rides during weekdays than weekends, however, casual users spent more rides during weekends instead. Member users and casual users posess similar trend using bike service throughout the year, both ride most during July and August.
-    - Member users spent nearly identical time during weekdays while spent slightly higher time during weekends, similarly when comparing the average duration throughout different months of the year we can also see they don't differ much with each other. Casual users spent highest time during weekends, with slightly lower time spent during Mondays and Fridays, then a bit lower time spent during Tuesdays, then Thursdays and Wednesdays; they also spent more time during May - August and spent less time during November - January.
-    - Member users have consistent maximum ride time throughout the week and the year, while casual user could have dramatic irregular spikes spent on bike riding, indicating some rides can last for a couple of days, which requires our attention for a further investigation.
+    The first observation is what has been explained in question 3.
+    - In general, member users spent more rides during weekdays than weekends, however, casual users spent more rides during weekends instead. Member users and casual users possess similar trends using bike service throughout the year, both ride most during July and August.
+    - Member users spent nearly identical time during weekdays while spending slightly longer time during weekends, similarly when comparing the average duration throughout different months of the year we can also see they don't differ much from each other. Casual users spent the highest time during weekends, with slightly less time spent on Mondays and Fridays, then a bit less time spent on Tuesdays, then Thursdays and Wednesdays; they also spent more time during May-August and spent less time during November-January.
+    - Member users have consistent maximum ride time throughout the week and the year, while casual users could have dramatic irregular spikes spent on bike riding, indicating some rides can last for a couple of days, which requires our attention for further investigation.
 
 5. How will these insights help answer your business questions?
     - These insights are beneficial for us to investigate the major differences between member users and casual users.
@@ -160,21 +160,21 @@ results?
 
 ### Deliverable 
 - A summary of your analysis
-    - According to the comprehensive analysis, we can first observe that although the casual users have less rides than member users, they have much higher average duration than member users. In general, member users spent more rides during weekdays than weekends, however, casual users spent more rides during weekends instead. Member users and casual users posess similar trend using bike service throughout the year, both ride most during July and August. Member users spent nearly identical time during weekdays while spent slightly higher time during weekends, similarly when comparing the average duration throughout different months of the year we can also see they don't differ much with each other.. Casual users spent highest time during weekends, with slightly lower time spent during Mondays and Fridays, then a bit lower time spent during Tuesdays, then Thursdays and Wednesdays; they also spent more time during May - August and spent less time during November - January. Member users have consistent maximum ride time throughout the week, while casual user could have dramatic irregular spikes spent on bike riding, indicating some rides can last for a couple of days, which requires our attention for a further investigation. It may be inferred that member users use more Cyclistic bikes for transporting to work purposes while casual users use more Cyclistic bikes for leisure purposes.  
+    - According to the comprehensive analysis, we can first observe that although the casual users have fewer rides than member users, they have a much higher average duration than member users. In general, member users spent more rides during weekdays than weekends, however, casual users spent more rides during weekends instead. Member users and casual users possess similar trends using bike service throughout the year, both ride most during July and August. Member users spent nearly identical time during weekdays while spent slightly longer time during weekends, similarly when comparing the average duration throughout different months of the year we can also see they don't differ much with each other.. Casual users spent the highest time during weekends, with slightly lower time spent during Mondays and Fridays, then a bit lower time spent during Tuesdays, then Thursdays and Wednesdays; they also spent more time during May-August and spent less time during November-January. Member users have consistent maximum ride time throughout the week, while casual users could have dramatic irregular spikes spent on bike riding, indicating some rides can last for a couple of days, which requires our attention for further investigation. It may be inferred that member users use more Cyclistic bikes for transporting to work purposes while casual users use more Cyclistic bikes for leisure purposes.  
 
 ## V. Share
 ### Guiding questions
 1. Were you able to answer the question of how annual members and casual riders use Cyclistic bikes differently?
-    - Yes, please refer to the deliverable section of Analyse stage.
+    - Yes, please refer to the deliverable section of the Analyse stage.
 2. What story does your data tell?
     - My story tells the differences between casual and member users on the comparison of their total ride counts, average duration, also rides counts， average duration， maximum and minimum durations throughout the week and the year.  
 3. How do your findings relate to your original question?
     - The findings relate closely to my original question.
 4. Who is your audience? What is the best way to communicate with them?
     - At this stage my audience could be my team (Cyclistic marketing analytics team) and my manager Lily Moreno, considering I am only in charge of the question "How do annual members and casual riders use Cyclistic bikes differently?" while the other two questions will still need to be carried out by the other members.
-    - The best convinient way is to have a quick presentation so I can demonstrate what has been discovered through data visualisation and explanation. Otherwise a short report with major visualisation and findings may also be helpful.
+    - The most convenient way is to have a quick presentation so I can demonstrate what has been discovered through data visualisation and explanation. Otherwise a short report with major visualisation and findings may also be helpful.
 5. Can data visualization help you share your findings?
-    - Indeed, it makes sophisticated figures easier to be presented and saves audiences time to read and understand, hence it would enhance the efficiency of the storytelling and supports faster decision making.
+    - Indeed, it makes sophisticated figures easier to present and saves audiences time to read and understand, hence it enhances the efficiency of the storytelling and supports faster decision-making.
 6. Is your presentation accessible to your audience?
     - I would make sure to have my presentation accessible.
    
@@ -190,23 +190,23 @@ results?
 
 ### Deliverable 
 - Supporting visualizations and key findings
-    - Refer to the attached R markdown file and the deliverable section of Analyse stage.
+    - Refer to the attached R markdown file and the deliverable section of the Analyse stage.
 
 ## VI. Act
 ### Guiding questions
 1. What is your final conclusion based on your analysis?
-    - The two types of users could differ based on their purposes of using Cyclistic bikes service throughout the week and the year.  
+    - The two types of users could differ based on their purposes of using Cyclistic bike services throughout the week and the year.  
 2. How could your team and business apply your insights?
-    - My team can use my insights as a basis to carry onto the remaining reseach questions and further analysis.
-    - My manager may start considering marketing strategies based on different day of the week or different month of the year to motivate casual users to convert to member users. 
+    - My team can use my insights as a basis to carry on the remaining research questions and further analysis.
+    - My manager may start considering marketing strategies based on different days of the week or different months of the year to motivate casual users to convert to member users. 
 3. What next steps would you or your stakeholders take based on your findings?
-    - I would consider working along with the other teams (ie. product/service design team) requesting further information to investigate anomalies observed when comparing maximum duration. As maximum duration for casual users could reach a couple of days for one ride, this could be resulted in insufficient design of casual product/service where casual users may get overcharged, which could affect their motivation converting to annual members. 
+    - I would consider working along with the other teams (ie. product/service design team) requesting further information to investigate anomalies observed when comparing maximum duration. As the maximum duration for casual users could reach a couple of days for one ride, this could have resulted in insufficient design of casual products/services where casual users may get overcharged, which could affect their motivation to convert to annual members. 
 4. Is there additional data you could use to expand on your findings?
-    - Yes, I would like to obtain demographic data of users and financial ralated data to extend my analysis, considering they may provide valuable insights for further understanding the differences between the types of users. 
+    - Yes, I would like to obtain demographic data of users and financial-related data to extend my analysis, considering they may provide valuable insights for further understanding the differences between the types of users. 
 
 ### Key tasks
 1. Create your portfolio.
-    - Done, my GitHub account is created for the purpose to showcase my capability and my learning progress.
+    - Done, my GitHub account is created for the purpose of showcasing my capability and my learning progress.
 2. Add your case study.
     - Done, please refer to this file.
 3. Practice presenting your case study to a friend or family member.
@@ -214,6 +214,7 @@ results?
 
 ### Deliverable 
 - Your top three recommendations based on your analysis
-    - As users may choose the products based on different purposes, the business may consider weekend-only membership that offers better price than annual membership but also enhances user stickness.
-    - Since casual users usually have longer average duration than annual members, consider advertising the membership by highlighting the cost-efficiency especially for long duration hiring, also consider providing seasonal or weekly incentives/promotion to attract casual users to become annual members.   
-    - Considering some of the extrordinary maximum duration may be resulted from product/service design issue, any duration longer than 24 hours should be investigated so casual users' benefits are protected, which could improve company's brand image and motivate users to consider member plan. 
+    - As users may choose the products based on different purposes, the business may consider weekend-only membership that offers a better price than annual membership but also enhances user stickiness.
+    - Since casual users usually have a longer average duration than annual members, consider advertising the membership by highlighting the cost-efficiency, especially for long-duration hiring, also consider providing seasonal or weekly incentives/promotions to attract casual users to become annual members.   
+    - Considering some of the extraordinary maximum duration may have resulted from product/service design issues, any duration longer than 24 hours should be investigated so casual users' benefits are protected, which could improve the company's brand image and motivate users to consider member plans.
+ 
