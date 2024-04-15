@@ -1,0 +1,209 @@
+---
+title: "GDAC Case Study 1"
+author: "Terry Li"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r Load packages}
+library(tidyr)
+library(dplyr)
+library(lubridate)
+library(readr)
+library(ggplot2)
+```
+
+# 1. Processing Stage
+
+## 1.1 Import Data  
+
+```{r Import all the datasets}
+a <- read.csv("202304.csv")
+b <- read.csv("202305.csv")
+c <- read.csv("202306.csv")
+d <- read.csv("202307.csv")
+e <- read.csv("202308.csv")
+f <- read.csv("202309.csv")
+g <- read.csv("202310.csv")
+h <- read.csv("202311.csv")
+i <- read.csv("202312.csv")
+j <- read.csv("202401.csv")
+k <- read.csv("202402.csv")
+l <- read.csv("202403.csv")
+```
+
+```{r Bind all datasets into one single dataset}
+data <- bind_rows(a, b, c, d, e, f, g, h, i, j, k, l)
+```
+
+```{r Check the structure of the dataset}
+str(data)
+```
+## 1.2 Arrange and Mutate Data
+
+```{r Convert data into arranged order by starting time}
+ordered_data <- data %>% 
+  mutate(started_at = as_datetime(started_at), ended_at = as_datetime(ended_at)) %>% 
+  arrange(started_at)
+```
+
+```{r Mutate data to have ride length and day of the week information}
+mutated_data <- ordered_data %>% 
+  mutate(ride_length = as.numeric(ended_at - started_at), day_of_week = wday(started_at, label = TRUE), month = month(started_at, label = TRUE))
+```
+
+
+## 1.3 Verify and Cleaning Data
+
+```{r Check anomalies (filtering records that contains null values)}
+mutated_data %>% 
+  filter(is.na(ride_id) | is.na(started_at) | is.na(ended_at) | is.na(start_lat) | is.na(start_lng) | is.na(end_lat) | is.na(end_lng) | is.na(member_casual)) %>% 
+  count()
+mutated_data %>% 
+  filter(is.na(ride_id)) %>% 
+  count()
+mutated_data %>% 
+  filter(is.na(started_at) | is.na(ended_at)) %>% 
+  count()
+mutated_data %>% 
+  filter(is.na(start_lat) | is.na(start_lng)) %>% 
+  count()
+mutated_data %>% 
+  filter(is.na(end_lat) | is.na(end_lng)) %>% 
+  count()
+mutated_data %>% 
+  filter(is.na(member_casual)) %>% 
+  count()
+
+# We can see that under end_lat and end_lng there has 7566 observations contain null values.
+```
+```{r Verify range of ride_length and spot anomalies }
+mutated_data %>% 
+  reframe(range(ride_length))
+mutated_data %>% 
+  filter(ride_length <= 0) %>% 
+  count()
+# Ride_length of a set of observations are negative or zero which require removal.  
+```
+
+
+```{r Remove records that contain null values in end_lat and end_lng, plus negative or zero valued ride_length}
+processed_data <- mutated_data %>% 
+  filter(!is.na(end_lat), !is.na(end_lng), ride_length > 0)
+```
+
+```{r Double check if there are any duplicates}
+processed_data %>% 
+  distinct(ride_id) %>% 
+  count()
+```
+```{r Double check structure of the processed data}
+str(processed_data)
+```
+```{r Export processed data to local folder}
+write.csv(processed_data, "Processed data.csv")
+```
+
+
+
+# 2. Analysis Stage
+## 2.1 Summarise and Aggregate Data
+
+```{r Summarise the processed data}
+summarised_data <- processed_data %>% 
+  summarise(avg_ride = mean(ride_length), med_ride = median(ride_length), max_ride = max(ride_length), min_ride = min(ride_length))
+summarised_data
+```
+
+
+```{r Summarise the data with comparison between casual and member}
+group_compare <- processed_data %>% 
+  group_by(member_casual) %>% 
+  summarise(ride_count = n(), avg_ride = mean(ride_length), med_ride = median(ride_length), max_ride = max(ride_length), min_ride = min(ride_length))
+group_compare
+```
+
+```{r Compare across days of the week}
+group_compare_wk <- processed_data %>% 
+  group_by(member_casual, day_of_week) %>% 
+  summarise(ride_count = n(), avg_ride = mean(ride_length), med_ride = median(ride_length), max_ride = max(ride_length), min_ride = min(ride_length))
+group_compare_wk
+```
+
+```{r}
+group_compare_mth <- processed_data %>% 
+  group_by(member_casual, month) %>% 
+  summarise(ride_count = n(), avg_ride = mean(ride_length), med_ride = median(ride_length), max_ride = max(ride_length), min_ride = min(ride_length))
+group_compare_mth
+```
+
+
+## 2.2 Visualisations
+
+```{r viz1}
+ggplot(group_compare, aes(member_casual, ride_count, fill = member_casual)) +
+  geom_col(position = "dodge") +
+  labs(title = "Member vs. Casual: Total Count of Rides", x = "User", y = "Count of Rides", fill = "User")
+```
+
+
+```{r viz2}
+ggplot(group_compare, aes(member_casual, avg_ride, fill = member_casual)) +
+  geom_col(position = "dodge") +
+  labs(title = "Member vs. Casual: Total Average Ride Duration", x = "User", y = "Average Ride Duration (in seconds)", fill = "User")
+```
+
+
+
+```{r viz3}
+ggplot(group_compare_wk, aes(day_of_week, ride_count, fill = member_casual)) +
+  geom_col(position = "dodge") +
+  labs(title = "Member vs. Casual: Count of Rides by Day of Week", x = "Day of Week", y = "Count of Rides", fill = "User")
+```
+```{r viz4}
+ggplot(group_compare_wk, aes(day_of_week, avg_ride, fill = member_casual)) +
+  geom_col(position = "dodge") +
+  labs(title = "Member vs. Casual: Avergage Ride Duration by Day of Week", x = "Day of Week", y = "Avergage Ride Duration (in seconds)", fill = "User")
+```
+
+```{r viz5}
+ggplot(group_compare_wk, aes(day_of_week, max_ride, fill = member_casual)) +
+  geom_col(position = "dodge") +
+  labs(title = "Member vs. Casual: Maximum Ride Duration by Day of Week", x = "Day of Week", y = "Maximum Ride Duration (in seconds)", fill = "User")
+```
+
+```{r viz6}
+ggplot(group_compare_wk, aes(day_of_week, min_ride, fill = member_casual)) +
+  geom_col(position = "dodge") +
+  labs(title = "Member vs. Casual: Minimum Ride Duration by Day of Week", x = "Day of Week", y = "Minimum Ride Duration (in seconds)", fill = "User")
+```
+
+```{r viz7}
+ggplot(group_compare_mth, aes(month, ride_count, fill = member_casual)) +
+  geom_col(position = "dodge") +
+  labs(title = "Member vs. Casual: Count of Rides by Month", x = "Month", y = "Count of Rides", fill = "User")
+```
+
+```{r viz8}
+ggplot(group_compare_mth, aes(month, avg_ride, fill = member_casual)) +
+  geom_col(position = "dodge") +
+  labs(title = "Member vs. Casual: Avergage Ride Duration by Month", x = "Month", y = "Avergage Ride Duration (in seconds)", fill = "User")
+```
+
+
+
+
+```{r viz9}
+ggplot(group_compare_mth, aes(month, max_ride, fill = member_casual)) +
+  geom_col(position = "dodge") +
+  labs(title = "Member vs. Casual: Maximum Ride Duration by Month", x = "Month", y = "Maximum Ride Duration (in seconds)", fill = "User")
+```
+
+```{r viz10}
+ggplot(group_compare_mth, aes(month, min_ride, fill = member_casual)) +
+  geom_col(position = "dodge") +
+  labs(title = "Member vs. Casual: Minimum Ride Duration by Month", x = "Month", y = "Minimum Ride Duration (in seconds)", fill = "User")
+```
